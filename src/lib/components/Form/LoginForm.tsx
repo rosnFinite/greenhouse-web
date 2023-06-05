@@ -15,6 +15,8 @@ import { useSignInWithEmailAndPassword } from "react-firebase-hooks/auth";
 import { auth } from "../../../fbase/app";
 import SignInWithGoogle from "../SignInButtons/SignInWithGoogle";
 
+import FormContainer from "./FormContainer";
+
 export default function LoginForm() {
   const [signInForm, setSignInForm] = useState({
     email: "",
@@ -44,22 +46,7 @@ export default function LoginForm() {
   };
 
   return (
-    <Container
-      css={{
-        width: "30%",
-        minWidth: "350px",
-        height: "auto",
-        marginLeft: "auto",
-        marginRight: "auto",
-        marginTop: "auto",
-        marginBottom: "auto",
-        position: "relative",
-        "@smMax": {
-          marginTop: "5vh",
-          width: "100%",
-        },
-      }}
-    >
+    <FormContainer>
       <Container display="flex">
         <Image
           src="https://i.ibb.co/BgnybnJ/logo.png"
@@ -126,6 +113,6 @@ export default function LoginForm() {
           Hier registrieren
         </Link>
       </Text>
-    </Container>
+    </FormContainer>
   );
 }

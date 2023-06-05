@@ -1,4 +1,4 @@
-import { Container } from "@nextui-org/react";
+import { Card } from "@nextui-org/react";
 
 export default function FormContainer({
   children,
@@ -6,8 +6,10 @@ export default function FormContainer({
   children: React.ReactNode;
 }) {
   return (
-    <Container
+    <Card
+      variant="bordered"
       css={{
+        bgColor: "White",
         width: "30%",
         minWidth: "350px",
         height: "auto",
@@ -22,7 +24,7 @@ export default function FormContainer({
         },
       }}
     >
-      {children}
-    </Container>
+      <Card.Body>{children}</Card.Body>
+    </Card>
   );
 }
