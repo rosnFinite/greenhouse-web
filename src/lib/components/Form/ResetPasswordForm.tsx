@@ -1,18 +1,18 @@
-import { useSendPasswordResetEmail } from "react-firebase-hooks/auth";
 import { Text, Input, Button, Spacer } from "@nextui-org/react";
 import type { FormElement } from "@nextui-org/react";
 import { useRouter } from "next/router";
 import { useState } from "react";
+import { useSendPasswordResetEmail } from "react-firebase-hooks/auth";
 
 import { auth } from "../../../fbase/app";
+
 import FormContainer from "./FormContainer";
 
 export default function ResetPasswordForm() {
   const [email, setEmail] = useState("");
   const [isSuccess, setIsSuccess] = useState(false);
   const router = useRouter();
-  const [sendPasswordResetEmail, sending, fbError] =
-    useSendPasswordResetEmail(auth);
+  const [sendPasswordResetEmail, , fbError] = useSendPasswordResetEmail(auth);
 
   const handleSubmit = async () => {
     await sendPasswordResetEmail(email);

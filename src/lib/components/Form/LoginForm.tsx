@@ -8,8 +8,8 @@ import {
   Link,
 } from "@nextui-org/react";
 import type { FormElement } from "@nextui-org/react";
-import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
+import { useState, useEffect } from "react";
 import { useSignInWithEmailAndPassword } from "react-firebase-hooks/auth";
 
 import { auth } from "../../../fbase/app";
@@ -20,7 +20,7 @@ export default function LoginForm() {
     email: "",
     password: "",
   });
-  const [signInWithEmailAndPassword, user, loading, fbError] =
+  const [signInWithEmailAndPassword, user, , fbError] =
     useSignInWithEmailAndPassword(auth);
   const router = useRouter();
 
