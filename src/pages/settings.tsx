@@ -1,9 +1,10 @@
 import { Container, Text } from "@nextui-org/react";
+import dynamic from "next/dynamic";
 import type { ReactElement } from "react";
 
-import NavbarContainer from "lib/layout/NavbarContainer";
-
 import type { NextPageWithLayout } from "./_app";
+
+const NavbarContainer = dynamic(() => import("lib/layout/NavbarContainer"));
 
 const Settings: NextPageWithLayout = () => {
   return (

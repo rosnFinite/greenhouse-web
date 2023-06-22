@@ -1,7 +1,10 @@
 import { Container } from "@nextui-org/react";
+import dynamic from "next/dynamic";
 
-import LoginForm from "../lib/components/Form/LoginForm";
-import BackgroundImageContainer from "lib/layout/BackgroundImageContainer";
+const LoginForm = dynamic(() => import("../lib/components/Form/LoginForm"));
+const BackgroundImageContainer = dynamic(
+  () => import("lib/layout/BackgroundImageContainer")
+);
 
 export default function Login() {
   return (

@@ -1,7 +1,12 @@
 import { Container } from "@nextui-org/react";
+import dynamic from "next/dynamic";
 
-import RegisterForm from "../lib/components/Form/RegisterForm";
-import BackgroundImageContainer from "lib/layout/BackgroundImageContainer";
+const RegisterForm = dynamic(
+  () => import("../lib/components/Form/RegisterForm")
+);
+const BackgroundImageContainer = dynamic(
+  () => import("lib/layout/BackgroundImageContainer")
+);
 
 export default function Register() {
   return (

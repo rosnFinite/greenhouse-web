@@ -1,7 +1,12 @@
 import { Container } from "@nextui-org/react";
+import dynamic from "next/dynamic";
 
-import ResetPasswordForm from "../lib/components/Form/ResetPasswordForm";
-import BackgroundImageContainer from "lib/layout/BackgroundImageContainer";
+const ResetPasswordForm = dynamic(
+  () => import("../lib/components/Form/ResetPasswordForm")
+);
+const BackgroundImageContainer = dynamic(
+  () => import("lib/layout/BackgroundImageContainer")
+);
 
 export default function ResetPassword() {
   return (

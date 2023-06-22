@@ -11,8 +11,10 @@ import {
 import type { FormElement } from "@nextui-org/react";
 import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
-import { useCreateUserWithEmailAndPassword } from "react-firebase-hooks/auth";
-import { useAuthState } from "react-firebase-hooks/auth";
+import {
+  useCreateUserWithEmailAndPassword,
+  useAuthState,
+} from "react-firebase-hooks/auth";
 
 import { auth } from "../../../fbase/app";
 import SignInWithGoogle from "../SignInButtons/SignInWithGoogle";
