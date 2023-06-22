@@ -1,7 +1,9 @@
 import { Navbar, Link, Text, Avatar, Dropdown, Image } from "@nextui-org/react";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useAuthState } from "react-firebase-hooks/auth";
 import { FaUser } from "react-icons/fa";
+
+import { auth, logout } from "../../fbase/app";
 
 import Layout from "./Layout";
 
@@ -10,12 +12,10 @@ interface LinkMap {
   link: string;
 }
 
-export default function NavbarContainer({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+const NavbarContainer = ({ children }: { children: React.ReactNode }) => {
   const { asPath } = useRouter();
+  const router = useRouter();
+  const [user, , ,] = useAuthState(auth);
 
   const navigationItems: LinkMap[] = [
     { name: "Dashboard", link: "/dashboard" },
@@ -23,18 +23,12 @@ export default function NavbarContainer({
     { name: "Einstellungen", link: "/settings" },
   ];
 
-  const [hasMounted, setHasMounted] = useState(false);
-
-  useEffect(() => setHasMounted(true), []);
-
-  // handles hydration error (id mismatch between server and client)
-  if (!hasMounted) return null;
-
   return (
     <Layout>
-      <Navbar variant="sticky">
+      <Navbar id="navbar" variant="sticky">
         <Navbar.Toggle showIn="xs" />
         <Navbar.Brand
+          id="navbar-brand-container"
           css={{
             "@xs": {
               w: "170px",
@@ -42,16 +36,19 @@ export default function NavbarContainer({
           }}
         >
           <Image
+            loading="eager"
+            id="navbar-brand"
             src="https://i.ibb.co/BgnybnJ/logo.png"
             alt="logo"
             width="65px"
             height="65px"
           />
-          <Text b color="inherit" hideIn="xs">
-            LEAFLY
+          <Text id="navbar-brand-text" b color="inherit" hideIn="xs">
+            Leafly
           </Text>
         </Navbar.Brand>
         <Navbar.Content
+          id="navbar-content"
           enableCursorHighlight
           activeColor="success"
           hideIn="xs"
@@ -59,7 +56,7 @@ export default function NavbarContainer({
         >
           {navigationItems.map(({ name, link }) => (
             <Navbar.Link
-              id={`${name}-item`}
+              id={`navbar-${name}-item`}
               key={name}
               href={link}
               isActive={asPath === link}
@@ -70,6 +67,7 @@ export default function NavbarContainer({
           ))}
         </Navbar.Content>
         <Navbar.Content
+          id="navbar-content-profile"
           css={{
             "@xs": {
               w: "12%",
@@ -78,9 +76,10 @@ export default function NavbarContainer({
           }}
         >
           <Dropdown placement="bottom-right">
-            <Navbar.Item>
+            <Navbar.Item id="navbar-avatar-item">
               <Dropdown.Trigger>
                 <Avatar
+                  id="navbar-avatar"
                   bordered
                   as="button"
                   color="success"
@@ -89,11 +88,23 @@ export default function NavbarContainer({
                 />
               </Dropdown.Trigger>
             </Navbar.Item>
-            <Dropdown.Menu aria-label="User menu actions" color="warning">
-              <Dropdown.Item key="profile-settings">
+            <Dropdown.Menu
+              aria-label="User menu actions"
+              color="warning"
+              onAction={(actionKey) => {
+                if (actionKey === "logout") {
+                  logout();
+                  router.push("/login");
+                }
+              }}
+            >
+              <Dropdown.Item key="pofile-name">
+                {user?.displayName ? user?.displayName : user?.email}
+              </Dropdown.Item>
+              <Dropdown.Item key="profile-settings" withDivider>
                 Profileinstellung
               </Dropdown.Item>
-              <Dropdown.Item key="logout" withDivider color="error">
+              <Dropdown.Item key="logout" color="error">
                 Ausloggen
               </Dropdown.Item>
             </Dropdown.Menu>
@@ -102,7 +113,7 @@ export default function NavbarContainer({
         <Navbar.Collapse>
           {navigationItems.map(({ name, link }) => (
             <Navbar.CollapseItem
-              id={`${name}-item`}
+              id={`collapse-${name}-item`}
               key={name}
               activeColor="success"
               isActive={asPath === link}
@@ -120,7 +131,9 @@ export default function NavbarContainer({
           ))}
         </Navbar.Collapse>
       </Navbar>
-      {children}
+      {user ? children : <div />}
     </Layout>
   );
-}
+};
+
+export default NavbarContainer;

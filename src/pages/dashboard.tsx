@@ -1,13 +1,20 @@
 import { Container, Text } from "@nextui-org/react";
+import type { ReactElement } from "react";
 
 import NavbarContainer from "lib/layout/NavbarContainer";
 
-export default function Dashboard() {
+import type { NextPageWithLayout } from "./_app";
+
+const Dashboard: NextPageWithLayout = () => {
   return (
-    <NavbarContainer>
-      <Container display="flex" css={{ height: "100vh" }}>
-        <Text>Dashboard</Text>
-      </Container>
-    </NavbarContainer>
+    <Container display="flex" css={{ height: "100vh" }}>
+      <Text>Dashboard</Text>
+    </Container>
   );
-}
+};
+
+Dashboard.getLayout = function getLayout(page: ReactElement) {
+  return <NavbarContainer>{page}</NavbarContainer>;
+};
+
+export default Dashboard;

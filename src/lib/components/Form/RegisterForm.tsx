@@ -12,9 +12,11 @@ import type { FormElement } from "@nextui-org/react";
 import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
 import { useCreateUserWithEmailAndPassword } from "react-firebase-hooks/auth";
+import { useAuthState } from "react-firebase-hooks/auth";
 
 import { auth } from "../../../fbase/app";
 import SignInWithGoogle from "../SignInButtons/SignInWithGoogle";
+
 import FormContainer from "./FormContainer";
 
 export default function RegisterForm() {
@@ -25,14 +27,15 @@ export default function RegisterForm() {
     confirmPassword: "",
   });
   const [error, setError] = useState("");
-  const [createUserWithEmailAndPassword, user, loading, fbError] =
+  const [user, loading] = useAuthState(auth);
+  const [createUserWithEmailAndPassword, , , fbError] =
     useCreateUserWithEmailAndPassword(auth);
 
   useEffect(() => {
     // Check if user registration is successful
     if (user) {
       // Redirect to the login page
-      router.push("/login");
+      router.push("/dashboard");
     }
   }, [user, router]);
 

@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 import { useState } from "react";
 import { useSendPasswordResetEmail } from "react-firebase-hooks/auth";
 
-import { auth } from "../../../fbase/app";
+import { auth } from "../../../fbase/FirebaseProvider";
 
 import FormContainer from "./FormContainer";
 

@@ -10,7 +10,10 @@ import {
 import type { FormElement } from "@nextui-org/react";
 import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
-import { useSignInWithEmailAndPassword } from "react-firebase-hooks/auth";
+import {
+  useSignInWithEmailAndPassword,
+  useAuthState,
+} from "react-firebase-hooks/auth";
 
 import { auth } from "../../../fbase/app";
 import SignInWithGoogle from "../SignInButtons/SignInWithGoogle";
@@ -22,17 +25,18 @@ export default function LoginForm() {
     email: "",
     password: "",
   });
-  const [signInWithEmailAndPassword, user, , fbError] =
+  const [signInWithEmailAndPassword, , , fbError] =
     useSignInWithEmailAndPassword(auth);
+  const [user, loading, ,] = useAuthState(auth);
   const router = useRouter();
 
   useEffect(() => {
-    // Check if user registration is successful
-    if (user) {
-      // Redirect to the login page
-      router.push("/");
+    if (loading) {
+      // maybe trigger a loading screen
+      return;
     }
-  }, [user, router]);
+    if (user) router.push("/dashboard");
+  }, [router, user, loading]);
 
   const login = (): void => {
     signInWithEmailAndPassword(signInForm.email, signInForm.password);

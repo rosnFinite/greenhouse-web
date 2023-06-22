@@ -1,7 +1,7 @@
 import { Container, Button, Loading } from "@nextui-org/react";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
-import { useSignInWithGoogle } from "react-firebase-hooks/auth";
+import { useSignInWithGoogle, useAuthState } from "react-firebase-hooks/auth";
 import { FaGoogle } from "react-icons/fa";
 
 import { auth } from "../../../fbase/app";
@@ -12,14 +12,14 @@ export default function SignInWithGoogle({
   children: React.ReactNode;
 }) {
   const router = useRouter();
-  const [signInWithGoogle, user, loading] = useSignInWithGoogle(auth);
-  // TODO Automatic routing on successfull signIN
+  const [user, loading] = useAuthState(auth);
+  const [signInWithGoogle, , ,] = useSignInWithGoogle(auth);
 
   useEffect(() => {
     // Check if user registration is successful
     if (user) {
       // Redirect to the login page
-      router.push("/login");
+      router.push("/dashboard");
     }
   }, [user, router]);
 
@@ -45,7 +45,7 @@ export default function SignInWithGoogle({
           icon={<FaGoogle />}
           css={{ width: "100%" }}
           color="success"
-          onClick={() => signInWithGoogle()}
+          onPress={() => signInWithGoogle()}
         >
           {children}
         </Button>
