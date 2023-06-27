@@ -1,5 +1,5 @@
 import { Card, Grid, Text } from "@nextui-org/react";
-import { Line, LineChart, ResponsiveContainer, Tooltip } from "recharts";
+import { Line, LineChart, ResponsiveContainer } from "recharts";
 
 interface DataCardProps {
   titleName: string;
