@@ -27,7 +27,8 @@
     "react-aria": "^3.25.0",
     "react-dom": "18.1.0",
     "react-firebase-hooks": "^5.1.1",
-    "react-icons": "^4.9.0"
+    "react-icons": "^4.9.0",
+    "recharts": "^2.7.2"
   },
   "devDependencies": {
     "@commitlint/config-conventional": "^17.1.0",
