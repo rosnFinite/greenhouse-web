@@ -1,6 +1,8 @@
-import { Container, Grid, Text } from "@nextui-org/react";
+import { Card, Container, Grid, Progress, Text } from "@nextui-org/react";
 import dynamic from "next/dynamic";
 import type { ReactElement } from "react";
+
+import AddDevicesModal from "lib/components/Buttons/AddDevicesModal";
 
 import type { NextPageWithLayout } from "./_app";
 
@@ -120,20 +122,16 @@ const mockData = [
 
 const Dashboard: NextPageWithLayout = () => {
   return (
-    <Container
-      display="flex"
-      alignContent="flex-start"
-      css={{ height: "100vh" }}
-    >
-      <Text h3 css={{ textAlign: "center", marginTop: "$10" }}>
+    <Container css={{ height: "100vh" }}>
+      <Text h2 css={{ marginTop: "$10", marginBottom: 0 }}>
         Mein Gewächshaus
       </Text>
+      <Text size={10}>letzte Auktualisierung: 17:33 Uhr</Text>
       <Grid.Container
         gap={2}
         justify="center"
         css={{
           padding: 0,
-          height: "250px",
           marginBottom: "$10",
           marginTop: "$10",
         }}
@@ -168,12 +166,6 @@ const Dashboard: NextPageWithLayout = () => {
             }))}
           />
         </Grid>
-      </Grid.Container>
-      <Grid.Container
-        gap={2}
-        justify="center"
-        css={{ padding: 0, height: "250px" }}
-      >
         <Grid xs={12} md={4}>
           <DataCard
             titleName="Bodenfeuchtigkeit 1"
@@ -203,6 +195,40 @@ const Dashboard: NextPageWithLayout = () => {
               data,
             }))}
           />
+        </Grid>
+        <Grid xs={12} md={12}>
+          <Card variant="bordered">
+            <Card.Header>
+              <Text size={20}>Wasserreservoir</Text>
+            </Card.Header>
+            <Card.Body
+              css={{
+                overflow: "hidden",
+                paddingLeft: 0,
+                paddingRight: 0,
+                paddingBottom: 0,
+              }}
+            >
+              <Text size={40} css={{ marginLeft: 10, marginTop: -30 }}>
+                63.5%
+              </Text>
+              <Progress
+                squared
+                value={63.5}
+                color="success"
+                size="xl"
+                css={{ marginTop: 10 }}
+              />
+            </Card.Body>
+          </Card>
+        </Grid>
+        <Grid xs={12} md={12}>
+          <Text h3 css={{ marginTop: "$10" }}>
+            Weiteres Gewächshaus hinzufügen
+          </Text>
+        </Grid>
+        <Grid xs={12} md={12}>
+          <AddDevicesModal />
         </Grid>
       </Grid.Container>
     </Container>

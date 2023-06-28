@@ -9,7 +9,7 @@ interface DataCardProps {
 
 export default function DataCard({ titleName, suffix, data }: DataCardProps) {
   return (
-    <Card variant="bordered">
+    <Card variant="bordered" css={{ height: "200px" }}>
       <Card.Header>
         <Text size={20}>{titleName}</Text>
       </Card.Header>
