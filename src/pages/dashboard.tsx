@@ -1,25 +1,11 @@
-import { Container, Text, Grid, Card } from "@nextui-org/react";
+import { Container, Grid } from "@nextui-org/react";
 import dynamic from "next/dynamic";
 import type { ReactElement } from "react";
-
-import DataCard from "lib/components/Cards/DataCard";
 
 import type { NextPageWithLayout } from "./_app";
 
 const NavbarContainer = dynamic(() => import("lib/layout/NavbarContainer"));
-
-const MockItem = ({ text }: { text: string }): JSX.Element => {
-  return (
-    <Card css={{ $$cardColor: "$colors$success" }}>
-      <Card.Body>
-        <Text h6 size={15} color="white" css={{ m: 0 }}>
-          {text}
-        </Text>
-        <Text size={15}>sadaksd</Text>
-      </Card.Body>
-    </Card>
-  );
-};
+const DataCard = dynamic(() => import("lib/components/Cards/DataCard"));
 
 const mockData = [
   {
@@ -152,6 +138,7 @@ const Dashboard: NextPageWithLayout = () => {
         <Grid xs={12} md={4}>
           <DataCard
             titleName="Temperatur"
+            suffix="°C"
             data={mockData.map(({ timestamp, temperature: data }) => ({
               timestamp,
               data,
@@ -159,10 +146,24 @@ const Dashboard: NextPageWithLayout = () => {
           />
         </Grid>
         <Grid xs={12} md={4}>
-          <MockItem text="Luftfeuchtigkeit" />
+          <DataCard
+            titleName="Luftfeuchtigkeit"
+            suffix="%"
+            data={mockData.map(({ timestamp, humidity: data }) => ({
+              timestamp,
+              data,
+            }))}
+          />
         </Grid>
         <Grid xs={12} md={4}>
-          <MockItem text="Pflanzengröße" />
+          <DataCard
+            titleName="Pflanzengröße"
+            suffix="cm"
+            data={mockData.map(({ timestamp, plantSize: data }) => ({
+              timestamp,
+              data,
+            }))}
+          />
         </Grid>
       </Grid.Container>
       <Grid.Container
@@ -171,13 +172,34 @@ const Dashboard: NextPageWithLayout = () => {
         css={{ padding: 0, height: "200px" }}
       >
         <Grid xs={12} md={4}>
-          <MockItem text="Bodenfeuchtigkeit 1" />
+          <DataCard
+            titleName="Bodenfeuchtigkeit 1"
+            suffix="%"
+            data={mockData.map(({ timestamp, soilhumidity1: data }) => ({
+              timestamp,
+              data,
+            }))}
+          />
         </Grid>
         <Grid xs={12} md={4}>
-          <MockItem text="Bodenfeuchtigkeit 2" />
+          <DataCard
+            titleName="Bodenfeuchtigkeit 2"
+            suffix="%"
+            data={mockData.map(({ timestamp, soilhumidity2: data }) => ({
+              timestamp,
+              data,
+            }))}
+          />
         </Grid>
         <Grid xs={12} md={4}>
-          <MockItem text="Bodenfeuchtigkeit 3" />
+          <DataCard
+            titleName="Bodenfeuchtigkeit 3"
+            suffix="%"
+            data={mockData.map(({ timestamp, soilhumidity3: data }) => ({
+              timestamp,
+              data,
+            }))}
+          />
         </Grid>
       </Grid.Container>
     </Container>
