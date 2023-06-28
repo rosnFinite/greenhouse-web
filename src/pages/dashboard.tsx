@@ -130,7 +130,7 @@ const Dashboard: NextPageWithLayout = () => {
         justify="center"
         css={{
           padding: 0,
-          height: "200px",
+          height: "250px",
           marginBottom: "$10",
           marginTop: "$10",
         }}
@@ -169,7 +169,7 @@ const Dashboard: NextPageWithLayout = () => {
       <Grid.Container
         gap={2}
         justify="center"
-        css={{ padding: 0, height: "200px" }}
+        css={{ padding: 0, height: "250px" }}
       >
         <Grid xs={12} md={4}>
           <DataCard
