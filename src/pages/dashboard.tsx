@@ -1,4 +1,4 @@
-import { Container, Grid } from "@nextui-org/react";
+import { Container, Grid, Text } from "@nextui-org/react";
 import dynamic from "next/dynamic";
 import type { ReactElement } from "react";
 
@@ -125,6 +125,9 @@ const Dashboard: NextPageWithLayout = () => {
       alignContent="flex-start"
       css={{ height: "100vh" }}
     >
+      <Text h3 css={{ textAlign: "center", marginTop: "$10" }}>
+        Mein Gewächshaus
+      </Text>
       <Grid.Container
         gap={2}
         justify="center"

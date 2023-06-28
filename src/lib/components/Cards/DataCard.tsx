@@ -15,7 +15,7 @@ export default function DataCard({ titleName, suffix, data }: DataCardProps) {
       </Card.Header>
       <Card.Body
         css={{
-          overflowX: "hidden",
+          overflow: "hidden",
           paddingLeft: 0,
           paddingRight: 0,
           paddingBottom: 0,
