@@ -25,7 +25,17 @@ const NavbarContainer = ({ children }: { children: React.ReactNode }) => {
 
   return (
     <Layout>
-      <Navbar id="navbar" variant="sticky">
+      <Navbar
+        id="navbar"
+        variant="sticky"
+        css={{
+          background: "transparent",
+          backdropFilter: "saturate(1.8) blur(15px)",
+          $$navbarBlur: "blur(0px)",
+          $$navbarBackgroundColor: "transparent",
+          $$navbarBlurBackgroundColor: "transparent",
+        }}
+      >
         <Navbar.Toggle showIn="xs" />
         <Navbar.Brand
           id="navbar-brand-container"
