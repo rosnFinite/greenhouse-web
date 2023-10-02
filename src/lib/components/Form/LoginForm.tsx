@@ -15,7 +15,7 @@ import {
   useAuthState,
 } from "react-firebase-hooks/auth";
 
-import { auth } from "../../../fbase/app";
+import { auth } from "../../../fbase/firebaseClient";
 import SignInWithGoogle from "../SignInButtons/SignInWithGoogle";
 
 import FormContainer from "./FormContainer";

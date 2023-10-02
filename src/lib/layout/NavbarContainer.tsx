@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { FaUser } from "react-icons/fa";
 
-import { auth, logout } from "../../fbase/app";
+import { auth, logout } from "../../fbase/firebaseClient";
 
 import Layout from "./Layout";
 

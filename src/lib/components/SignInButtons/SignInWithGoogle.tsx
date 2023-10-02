@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import { useSignInWithGoogle, useAuthState } from "react-firebase-hooks/auth";
 import { FaGoogle } from "react-icons/fa";
 
-import { auth } from "../../../fbase/app";
+import { auth } from "../../../fbase/firebaseClient";
 
 export default function SignInWithGoogle({
   children,
