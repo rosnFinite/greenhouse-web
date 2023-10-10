@@ -48,7 +48,7 @@ export default async function handler(
             Object.keys(req.body).forEach((key) => {
               req.body[key] = [req.body[key]];
             });
-            console.log(req.body);
+            req.body.timestamp = new Date();
             firestore.collection("data").doc(apiKey).set(req.body);
           } else {
             const data = dataDoc.data();
@@ -60,11 +60,15 @@ export default async function handler(
             }
             // append new data to stored data until max is reached => then pop first value for each additional timestep
             Object.keys(data as object).forEach((key) => {
+              if (key === "timestamp") {
+                return;
+              }
               data[key].push(req.body[key]);
               if (data[key].length === 288) {
                 data[key].shift();
               }
             });
+            data.timestamp = new Date();
             await dataDocRef.update(data);
           }
           return res.status(200).json({ message: "Success!" });
