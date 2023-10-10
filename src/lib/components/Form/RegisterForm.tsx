@@ -9,6 +9,7 @@ import {
   Loading,
 } from "@nextui-org/react";
 import type { FormElement } from "@nextui-org/react";
+import axios from "axios";
 import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
 import {
@@ -66,7 +67,15 @@ export default function RegisterForm() {
       return;
     }
 
-    createUserWithEmailAndPassword(signUpForm.email, signUpForm.password);
+    createUserWithEmailAndPassword(signUpForm.email, signUpForm.password).then(
+      (userCredentials) => {
+        axios.post("/api/user", {
+          uid: userCredentials?.user.uid,
+          displayName: userCredentials?.user.displayName,
+          email: userCredentials?.user.email,
+        });
+      }
+    );
   };
 
   return (

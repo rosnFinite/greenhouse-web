@@ -1,4 +1,6 @@
+/* eslint-disable no-console */
 import { Container, Button, Loading } from "@nextui-org/react";
+import axios from "axios";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 import { useSignInWithGoogle, useAuthState } from "react-firebase-hooks/auth";
@@ -45,7 +47,23 @@ export default function SignInWithGoogle({
           icon={<FaGoogle />}
           css={{ width: "100%" }}
           color="success"
-          onPress={() => signInWithGoogle()}
+          onPress={() =>
+            signInWithGoogle().then((userCredentials) => {
+              axios.post(
+                "api/user",
+                {
+                  uid: userCredentials?.user.uid,
+                  displayName: userCredentials?.user.displayName,
+                  email: userCredentials?.user.email,
+                },
+                {
+                  validateStatus(status) {
+                    return status < 500; // Resolve only if the status code is less than 500
+                  },
+                }
+              );
+            })
+          }
         >
           {children}
         </Button>
