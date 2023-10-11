@@ -35,8 +35,9 @@ export default async function handler(
     // link device to uid and add deviceId to user.devices
     // here we need to check if deviceId already has a linked user => deny request
     const deviceData = deviceDoc.data();
-    const userData = deviceDoc.data();
+    const userData = userDoc.data();
     if (deviceData !== undefined && deviceData.user !== "") {
+      console.log("Device already linked");
       return res
         .status(400)
         .send({ message: "Error: Device already linked to a user" });
@@ -44,15 +45,19 @@ export default async function handler(
     // update user.devices and device.user
     await deviceDocRef.update({ user: req.body.uid });
     // if user.devices is empty create a new device list with newly added device as only entry
-    if (userData?.devces === undefined) {
+    if (userData?.devices === undefined) {
       await userDocRef.update({
         devices: [req.body.deviceId],
       });
     } else {
+      userData?.devices.push(req.body.deviceId);
       await userDocRef.update({
-        devices: userData?.devices.push(req.body.deviceId),
+        devices: userData?.devices,
       });
     }
+    return res
+      .status(200)
+      .json({ message: "Success: Device was successfully linked" });
   }
   res.setHeader("Allow", ["POST"]);
   return res
