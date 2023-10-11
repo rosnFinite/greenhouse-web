@@ -20,10 +20,8 @@ export default async function handler(
   res: NextApiResponse
 ) {
   if (req.method === "POST") {
-    console.log(req.headers.apikey);
     const apiKey = req.headers.apikey as string;
-    console.log(apiKey);
-    console.log(req.body);
+    console.log(`POST from DeviceID: ${apiKey}`);
     try {
       const deviceDocRef = firestore.collection("devices").doc(apiKey);
       const deviceDoc = await deviceDocRef.get();
@@ -32,6 +30,9 @@ export default async function handler(
         // If data does not conform to the schema
         if (!validatedRequest.success) {
           const { errors } = validatedRequest.error;
+          console.log(
+            `POST from DeviceID: ${apiKey}: Error, Unprocessable Content`
+          );
           return res.status(422).json({
             error: { message: "Unprocessable content", errors },
           });
@@ -44,6 +45,9 @@ export default async function handler(
         // if no data has been stored for device create new document and store provided data
         if (!dataDoc.exists) {
           // transform data each property of received data into an array
+          console.log(
+            `POST from DeviceID: ${apiKey}: Successful, new device document created`
+          );
           Object.keys(req.body).forEach((key) => {
             req.body[key] = [req.body[key]];
           });
@@ -53,6 +57,7 @@ export default async function handler(
           const data = dataDoc.data();
           // check if for some reason data is undefined and return Code 500
           if (data === undefined) {
+            console.log(`POST from DeviceID: ${apiKey}: Errro`);
             return res
               .status(500)
               .json({ message: "Error has occurred while updating data" });
@@ -67,18 +72,49 @@ export default async function handler(
               data[key].shift();
             }
           });
+          console.log(
+            `POST from DeviceID: ${apiKey}: Successful, stored device data`
+          );
           data.timestamp = new Date();
           await dataDocRef.update(data);
         }
         return res.status(200).json({ message: "Success!" });
       }
+      console.log(
+        `POST from DeviceID: ${apiKey}: Error, provided deviceID was not found in database`
+      );
       return res.status(403).json({ message: "Device is not authorized" });
     } catch (err) {
       console.log(err);
       return res.status(500).json({ message: "Error has occurred" });
     }
   }
-  res.setHeader("Allow", ["POST"]);
+  if (req.method === "GET") {
+    // get devices from user's device list
+    console.log(`GET for UID: ${req.query.id}`);
+    const userDocRef = firestore
+      .collection("users")
+      .doc(req.query.id as string);
+    const userDoc = await userDocRef.get();
+    if (!userDoc.exists) {
+      console.log(`GET for UID: ${req.query.id}: Error, user doc not found`);
+      return res.status(404).json({ message: "User invalid" });
+    }
+    const userData = userDoc.data();
+    // TODO expand to get data for multiple devices
+    const dataDocRef = firestore.collection("data").doc(userData?.devices[0]);
+    const dataDoc = await dataDocRef.get();
+    if (!dataDoc.exists) {
+      console.log(
+        `GET for UID: ${req.query.id}: Error, user has no linked devices`
+      );
+      return res.status(404).json({ message: "Device does not exist" });
+    }
+    const data = dataDoc.data();
+    console.log(`GET for UID: ${req.query.id}: Successful, data has been send`);
+    return res.status(200).json(data);
+  }
+  res.setHeader("Allow", ["POST", "GET"]);
   return res
     .status(405)
     .json({ message: `Error: Method ${req.method} not allowed` });
