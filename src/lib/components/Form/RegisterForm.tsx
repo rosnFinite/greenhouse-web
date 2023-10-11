@@ -9,6 +9,7 @@ import {
   Loading,
 } from "@nextui-org/react";
 import type { FormElement } from "@nextui-org/react";
+import axios from "axios";
 import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
 import {
@@ -16,7 +17,7 @@ import {
   useAuthState,
 } from "react-firebase-hooks/auth";
 
-import { auth } from "../../../fbase/app";
+import { auth } from "../../../fbase/firebaseClient";
 import SignInWithGoogle from "../SignInButtons/SignInWithGoogle";
 
 import FormContainer from "./FormContainer";
@@ -66,7 +67,15 @@ export default function RegisterForm() {
       return;
     }
 
-    createUserWithEmailAndPassword(signUpForm.email, signUpForm.password);
+    createUserWithEmailAndPassword(signUpForm.email, signUpForm.password).then(
+      (userCredentials) => {
+        axios.post("/api/user", {
+          uid: userCredentials?.user.uid,
+          displayName: userCredentials?.user.displayName,
+          email: userCredentials?.user.email,
+        });
+      }
+    );
   };
 
   return (
