@@ -46,8 +46,6 @@ const Dashboard: NextPageWithLayout = () => {
         soil_humidity_2: res.data.soil_humidity_2,
         soil_humidity_3: res.data.soil_humidity_3,
       });
-      // eslint-disable-next-line no-console
-      console.log("run");
     } catch (e) {
       // eslint-disable-next-line no-console
       console.log(e);
@@ -60,6 +58,7 @@ const Dashboard: NextPageWithLayout = () => {
     return () => {
       clearInterval(timer);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
