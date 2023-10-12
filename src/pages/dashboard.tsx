@@ -24,6 +24,7 @@ interface DataProperties {
 
 const Dashboard: NextPageWithLayout = () => {
   const [user] = useAuthState(auth);
+  const [date, setDate] = useState(new Date());
   const [data, setData] = useState<DataProperties>({
     temperature: [],
     humidity: [],
@@ -37,6 +38,7 @@ const Dashboard: NextPageWithLayout = () => {
   const getData = async () => {
     try {
       const res = await axios.get(`/api/data/?id=${user?.uid}`);
+      setDate(new Date());
       setData({
         temperature: res.data.temperature,
         humidity: res.data.humidity,
@@ -66,7 +68,9 @@ const Dashboard: NextPageWithLayout = () => {
       <Text h2 css={{ marginTop: "$10", marginBottom: 0 }}>
         Mein Gewächshaus
       </Text>
-      <Text size={10}>letzte Auktualisierung: 17:33 Uhr</Text>
+      <Text
+        size={10}
+      >{`letzte Auktualisierung: ${date.getHours()}:${date.getMinutes()} Uhr`}</Text>
       <Grid.Container
         gap={2}
         justify="center"
