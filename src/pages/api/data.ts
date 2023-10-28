@@ -68,7 +68,7 @@ export default async function handler(
               return;
             }
             data[key].push(req.body[key]);
-            if (data[key].length === 288) {
+            if (data[key].length === 43200) {
               data[key].shift();
             }
           });
