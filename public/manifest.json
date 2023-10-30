@@ -1,8 +1,8 @@
 {
-  "short_name": "nextarter-nextui",
-  "name": "Next.js App Template",
-  "lang": "en",
-  "start_url": "/",
+  "short_name": "Leafly",
+  "name": "Leafly",
+  "lang": "de",
+  "start_url": "/login",
   "background_color": "#FFFFFF",
   "theme_color": "#FFFFFF",
   "dir": "ltr",
