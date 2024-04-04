@@ -8,7 +8,7 @@ import { firestore } from "fbase/firebaseAdmin";
 const DataSchema = z.object({
   temperature: z.number().min(0).max(100),
   humidity: z.number().min(0).max(100),
-  water_level: z.number().positive(),
+  is_water_empty: z.boolean(),
   soil_humidity_1: z.number(),
   soil_humidity_2: z.number(),
   soil_humidity_3: z.number(),
