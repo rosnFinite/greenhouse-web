@@ -71,9 +71,10 @@ export default async function handler(
               return;
             }
             if (key === "temperature") {
-              req.body[key] = req.body[key] * getRandomInt(100)
+              data[key].push(req.body[key] * getRandomInt(100))
+            } else {
+              data[key].push(req.body[key]);
             }
-            data[key].push(req.body[key]);
             if (data[key].length === 144) {
               data[key].shift();
             }
