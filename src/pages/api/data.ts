@@ -13,7 +13,7 @@ const DataSchema = z.object({
   soil_humidity_2: z.number(),
   soil_humidity_3: z.number(),
 });
-function getRandomInt(max) {
+function getRandomInt(max: number) {
   return Math.floor(Math.random() * max);
 }
 
