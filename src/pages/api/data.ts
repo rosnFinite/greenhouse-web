@@ -71,7 +71,7 @@ export default async function handler(
               return;
             }
             if (key === "temperature") {
-              data[key].push(req.body[key] * getRandomInt(100));
+              data[key].push((req.body[key] * getRandomInt(4)).toFixed(1));
             } else {
               data[key].push(req.body[key]);
             }
