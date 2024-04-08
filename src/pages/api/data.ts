@@ -13,9 +13,6 @@ const DataSchema = z.object({
   soil_humidity_2: z.number(),
   soil_humidity_3: z.number(),
 });
-function getRandomInt(max: number) {
-  return Math.floor(Math.random() * max) + 1;
-}
 
 // eslint-disable-next-line sonarjs/cognitive-complexity
 export default async function handler(
@@ -70,13 +67,7 @@ export default async function handler(
             if (key === "timestamp") {
               return;
             }
-            if (key === "temperature") {
-              data[key].push(
-                Number((req.body[key] * getRandomInt(4)).toFixed(1))
-              );
-            } else {
-              data[key].push(req.body[key]);
-            }
+            data[key].push(req.body[key]);
             if (data[key].length === 144) {
               data[key].shift();
             }
