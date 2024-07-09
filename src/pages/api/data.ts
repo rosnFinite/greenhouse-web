@@ -102,14 +102,14 @@ export default async function handler(
     }
     const userData = userDoc.data();
     // TODO expand to get data for multiple devices
-    const dataDocRef = firestore.collection("data").doc(userData?.devices[0]);
-    const dataDoc = await dataDocRef.get();
-    if (!dataDoc.exists) {
+    if ((userData?.devices.length === 1 && userData?.devices[0] === "") || userData?.devices.length === 0) {
       console.log(
         `GET for UID: ${req.query.id}: Error, user has no linked devices`
       );
       return res.status(404).json({ message: "Device does not exist" });
     }
+    const dataDocRef = firestore.collection("data").doc(userData?.devices[0] as string);
+    const dataDoc = await dataDocRef.get();
     const data = dataDoc.data();
     console.log(`GET for UID: ${req.query.id}: Successful, data has been send`);
     return res.status(200).json(data);
