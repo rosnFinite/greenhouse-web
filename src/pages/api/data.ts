@@ -22,6 +22,7 @@ export default async function handler(
   if (req.method === "POST") {
     const apiKey = req.headers.apikey as string;
     console.log(`POST from DeviceID: ${apiKey}`);
+    console.log(req.body);
     try {
       const deviceDocRef = firestore.collection("devices").doc(apiKey);
       const deviceDoc = await deviceDocRef.get();
