@@ -40,7 +40,7 @@ export default async function handler(
           });
         }
         // TODO: CHANGE TO is_water_empty SOLUTION IN FUTURE
-        const {a, ...body_new} = req.body;
+        const { a, ...body_new } = req.body;
         body_new.water_level = req.body.is_water_empty ? 0 : 1;
         req.body = body_new;
         // otherwise get data for provided apiKey/deviceId
