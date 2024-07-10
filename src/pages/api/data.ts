@@ -8,6 +8,7 @@ import { firestore } from "fbase/firebaseAdmin";
 const DataSchema = z.object({
   temperature: z.number().min(0).max(100),
   humidity: z.number().min(0).max(100),
+  distance: z.number().min(0),
   is_water_empty: z.boolean(),
   soil_humidity_1: z.number(),
   soil_humidity_2: z.number(),
@@ -38,6 +39,10 @@ export default async function handler(
             error: { message: "Unprocessable content", errors },
           });
         }
+        // TODO: CHANGE TO is_water_empty SOLUTION IN FUTURE
+        const {a, ...body_new} = req.body;
+        body_new.water_level = req.body.is_water_empty ? 0 : 1;
+        req.body = body_new;
         // otherwise get data for provided apiKey/deviceId
         const dataDocRef = firestore.collection("data").doc(apiKey);
         const dataDoc = await dataDocRef.get();
