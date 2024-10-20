@@ -13,6 +13,10 @@ const DataSchema = z.object({
   soil_humidity_1: z.number(),
   soil_humidity_2: z.number(),
   soil_humidity_3: z.number(),
+  emg_stop_pump1: z.boolean(),
+  emg_stop_pump2: z.boolean(),
+  emg_stop_pump3: z.boolean(),
+  ip_adress: z.string()
 });
 
 // eslint-disable-next-line sonarjs/cognitive-complexity
