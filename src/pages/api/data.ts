@@ -13,6 +13,10 @@ const DataSchema = z.object({
   soil_humidity_1: z.number(),
   soil_humidity_2: z.number(),
   soil_humidity_3: z.number(),
+  emg_stop_pump1: z.boolean(),
+  emg_stop_pump2: z.boolean(),
+  emg_stop_pump3: z.boolean(),
+  ip_adress: z.string()
 });
 
 // eslint-disable-next-line sonarjs/cognitive-complexity
@@ -39,10 +43,6 @@ export default async function handler(
             error: { message: "Unprocessable content", errors },
           });
         }
-        // TODO: CHANGE TO is_water_empty SOLUTION IN FUTURE
-        const { a, ...bodyNew } = req.body;
-        bodyNew.water_level = req.body.is_water_empty ? 0 : 1;
-        req.body = bodyNew;
         // otherwise get data for provided apiKey/deviceId
         const dataDocRef = firestore.collection("data").doc(apiKey);
         const dataDoc = await dataDocRef.get();
