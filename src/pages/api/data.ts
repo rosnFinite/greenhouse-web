@@ -15,7 +15,7 @@ const DataSchema = z.object({
   emg_stop_pump1: z.boolean(),
   emg_stop_pump2: z.boolean(),
   emg_stop_pump3: z.boolean(),
-  ip_adress: z.string(),
+  ip_address: z.string(),
 });
 
 // eslint-disable-next-line sonarjs/cognitive-complexity
